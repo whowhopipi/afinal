@@ -1,7 +1,7 @@
-
 #afinal交流平台
-* QQ群：192341294（群1）    246710918（群2）
-* 网址：[http://www.afinal.org](http://www.afinal.org)
+* QQ群：192341294（群1，2000未满）    246710918（群2，1000未满）
+##作者个人微信
+![mahua](http://7xi3g2.com1.z0.glb.clouddn.com/grwx.png?imageView2/1/w/250/h/250/q/87)
 
 
 ----
@@ -46,7 +46,32 @@ db.save(user);
 ```
 
 ----
-
+##FinalDB OneToMany懒加载使用方法：
+模型定义：
+```java
+public class Parent{
+    private int id;
+    @OneToMany(manyColumn = "parentId")
+    private OneToManyLazyLoader<Parent ,Child> children;
+    /*....*/
+}
+public class Child{
+    private int id;
+    private String text;
+    @ManyToOne(column = "parentId")
+    private  Parent  parent;
+    /*....*/
+}
+```
+使用：
+```java
+List<Parent> all = db.findAll(Parent.class);
+        for( Parent  item : all){
+            if(item.getChildren ().getList().size()>0)
+                Toast.makeText(this,item.getText() + item.getChildren().getList().get(0).getText(),Toast.LENGTH_LONG).show();
+        }
+```
+----
 ##FinalActivity使用方法：
 * 完全注解方式就可以进行UI绑定和事件绑定
 * 无需findViewById和setClickListener等
@@ -67,6 +92,22 @@ public class AfinalDemoActivity extends FinalActivity {
        textView.setText("text set form button");
     }
 }
+```
+*在其他侵入式框架下使用（如ActionBarShelock）
+```java
+     protected void onCreate(Bundle savedInstanceState) {
+       super.onCreate(savedInstanceState);
+        setContentView(view);
+        FinalActivity.initInjectedView(this);
+     }
+```
+*在Fragment中使用
+```java
+     public View onCreateView(LayoutInflater inflater, ViewGroup container,
+          Bundle savedInstanceState) {
+       View viewRoot = inflater.inflate(R.layout.map_frame, container, false);
+       FinalActivity.initInjectedView(this,viewRoot);
+    }
 ```
 ##FinalHttp使用方法：
 ###普通get方法
@@ -244,6 +285,8 @@ public View getView(int position, View convertView, ViewGroup parent) {
 
 #关于作者michael
 * 个人博客：[http://www.yangfuhai.com](http://www.yangfuhai.com)
-* afinal捐助：[http://me.alipay.com/yangfuhai](http://me.alipay.com/yangfuhai) （为了感谢捐助者，michael将会把捐助者将公布在afinal官方网站[afinal.org](http://www.afinal.org)上,不让公布的同学说明下）
+* afinal捐助：[http://me.alipay.com/yangfuhai](http://me.alipay.com/yangfuhai) （为了感谢捐助者，michael将会把捐助者将公布在afinal官方网站上,不让公布的同学说明下）
 * afinal交流QQ群 ： 192341294
+#个人微信
+![mahua](http://7xi3g2.com1.z0.glb.clouddn.com/grwx.png?imageView2/1/w/250/h/250/q/87)
 
